@@ -3,7 +3,7 @@
     contents added by umbral-pre-wasm makefile/build script
 */
 
-import { KeyFrag, encryptPlaintext } from  "./umbral_pre_wasm_bg.js";
+import { KeyFrag } from  "./umbral_pre_wasm_bg.js";
 
 export const decrypt_reencrypted = (
     receiving_sk,//: SecretKey,
@@ -16,14 +16,6 @@ export const decrypt_reencrypted = (
         return value.withCFrag(cfrag)
     }, capsule)
     return capsuleWithCFrags.decryptReencrypted(receiving_sk, delegating_pk, ciphertext);
-}
-
-export function encrypt(delegating_pk, plaintext) {
-    const encryptionResult = encryptPlaintext(delegating_pk, plaintext)
-    return {
-        capsule: encryptionResult.capsule,
-        ciphertext: encryptionResult.ciphertext
-    }
 }
 
 KeyFrag.prototype.verify =  (verifying_pk, optional = {delegating_pk, receiving_pk} = {}) => {
