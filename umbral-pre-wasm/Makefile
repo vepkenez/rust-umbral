@@ -23,6 +23,9 @@ pkg: src
 	cp package.template.json pkg/package.json
 	cp LICENSE README.md pkg/
 
+	# add patches
+	cat ./patches/api-compatibility.js.txt >> pkg/pkg-bundler/umbral_pre_wasm.js
+
 
 .PHONY: clean
 

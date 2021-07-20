@@ -407,7 +407,7 @@ impl KeyFrag {
     // So we have to use 4 functions instead of 1. Yikes.
 
     #[wasm_bindgen]
-    pub fn verify(&self, verifying_pk: &PublicKey) -> Result<VerifiedKeyFrag, JsValue> {
+    pub fn verify_with_only_public_key(&self, verifying_pk: &PublicKey) -> Result<VerifiedKeyFrag, JsValue> {
         self.0
             .verify(&verifying_pk.0, None, None)
             .map(VerifiedKeyFrag)

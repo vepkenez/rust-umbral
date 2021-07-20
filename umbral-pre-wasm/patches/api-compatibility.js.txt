@@ -1,0 +1,48 @@
+
+/*
+    contents added by umbral-pre-wasm makefile/build script
+*/
+
+import { KeyFrag, encryptPlaintext } from  "./umbral_pre_wasm_bg.js";
+
+export const decrypt_reencrypted = (
+    receiving_sk,//: SecretKey,
+    delegating_pk,//: PublicKey,
+    capsule,//: Capsule,
+    verified_cfrags,//: Sequence[VerifiedCapsuleFrag],
+    ciphertext//: bytes,) => (
+) => {
+    const capsuleWithCFrags = verified_cfrags.reduce((value, cfrag) => {
+        return value.withCFrag(cfrag)
+    }, capsule)
+    return capsuleWithCFrags.decryptReencrypted(receiving_sk, delegating_pk, ciphertext);
+}
+
+export function encrypt(delegating_pk, plaintext) {
+    const encryptionResult = encryptPlaintext(delegating_pk, plaintext)
+    return {
+        capsule: encryptionResult.capsule,
+        ciphertext: encryptionResult.ciphertext
+    }
+}
+
+KeyFrag.prototype.verify =  (verifying_pk, optional = {delegating_pk, receiving_pk} = {}) => {
+    const delegating_pk = optional.delegating_pk
+    const receiving_pk = optional.receiving_pk
+
+    if (receiving_pk && delegating_pk) {
+        return this.verifyWithDelegatingAndReceivingKeys(verifying_pk, delegating_pk, receiving_pk)
+    }
+
+    if (receiving_pk){
+        return this.verifyWithReceivingKey(verifying_pk, receiving_pk)
+    }
+
+    if (delegating_pk){
+        return this.verifyWithDelegatingKey(verifying_pk, delegating_pk)
+    }
+
+    return this.verify_with_only_public_key()
+}
+
+
