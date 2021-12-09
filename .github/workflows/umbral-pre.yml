@@ -103,6 +103,12 @@ jobs:
       - run: cargo check --target ${{ matrix.target }} --all-features
       - run: cargo test --release --target ${{ matrix.target }}
 
+  trigger-build-wheels:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: ./.github/workflows/wheels.yml
+
   codecov:
     runs-on: ubuntu-latest
     steps:
