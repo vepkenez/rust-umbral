@@ -103,12 +103,13 @@ jobs:
       - run: cargo check --target ${{ matrix.target }} --all-features
       - run: cargo test --release --target ${{ matrix.target }}
 
-  trigger-build-wheels:
+  trigger-wheels:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/workflows/wheels.yml
+      - uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Wheels
 
   codecov:
     runs-on: ubuntu-latest
