@@ -110,6 +110,7 @@ jobs:
       - uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: Wheels
+          token: ${{ secrets.PERSONAL_TOKEN }}
 
   codecov:
     runs-on: ubuntu-latest
