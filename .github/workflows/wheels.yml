@@ -63,10 +63,12 @@ jobs:
         run: cp -r ./umbral-pre ./umbral-pre-python/umbral-pre
 
       - if: runner.os == 'macOS'
+        working-directory: ./umbral-pre-python
         name: relocate umbral-pre in cargo.toml
         run: sed -i '' 's/..\/umbral-pre/.\/umbral-pre/g' Cargo.toml
 
       - if: runner.os != 'macOS'
+        working-directory: ./umbral-pre-python
         name: relocate umbral-pre in cargo.toml
         run: sed -i 's/..\/umbral-pre/.\/umbral-pre/g' Cargo.toml
 
